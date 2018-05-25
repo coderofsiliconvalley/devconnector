@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 //Load user model
 const User = require("../../models/User");
 const keys = require("../../config/keys");
+const passport = require("passport");
 
 // @route GET api/users
 router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
@@ -73,5 +74,13 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({ id: req.user._id, name: req.user.name, email: req.user.email });
+  }
+);
 
 module.exports = router;
