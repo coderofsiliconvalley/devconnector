@@ -8,27 +8,30 @@ const User = require("../../models/User");
 const keys = require("../../config/keys");
 const passport = require("passport");
 const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
+const pry = require("pryjs");
 
 // @route GET api/users
 router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 
-//Register User
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
-
+  // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
+
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       errors.email = "Email already exists";
-      return res.status(400).json({ email: errors.email });
+      return res.status(400).json(errors);
     } else {
       const avatar = gravatar.url(req.body.email, {
-        s: "200",
-        r: "pg",
-        d: "mm"
+        s: "200", // Size
+        r: "pg", // Rating
+        d: "mm" // Default
       });
+
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -51,12 +54,18 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   const email = req.body.email;
   const password = req.body.password;
   User.findOne({ email }).then(user => {
     // Check for user
     if (!user) {
-      return res.status(404).json({ email: "User Not found" });
+      errors.email = "User not found";
+      return res.status(404).json(errors);
     }
 
     bcrypt.compare(password, user.password).then(isMatch => {
@@ -76,7 +85,8 @@ router.post("/login", (req, res) => {
           }
         );
       } else {
-        return res.status(400).json({ password: "Password incorrect" });
+        errors.password = "Password is incorrrect";
+        return res.status(400).json(errors);
       }
     });
   });
