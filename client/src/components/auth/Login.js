@@ -17,6 +17,15 @@ class Login extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -24,10 +33,12 @@ class Login extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const user = {
+    const userData = {
       email: this.state.email,
       password: this.state.password
     };
+
+    this.props.loginUser(userData);
   }
 
   render() {
@@ -93,4 +104,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(null, { loginUser })(Login);
+export default connect(mapStateToProps, { loginUser })(Login);
