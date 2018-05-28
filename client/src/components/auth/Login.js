@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
+import classnames from "classnames";
 
 class Login extends Component {
   constructor() {
@@ -82,4 +83,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(null, { loginUser })(login);
+export default connect(null, { loginUser })(Login);
