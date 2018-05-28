@@ -44,7 +44,6 @@ class Register extends Component {
   render() {
     return (
       <div className="register">
-        {user ? user.name : null}
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -57,30 +56,34 @@ class Register extends Component {
                   <input
                     type="text"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.name
+                      "is-invalid": this.props.errors.name
                     })}
                     placeholder="Name"
                     name="name"
                     value={this.state.name}
                     onChange={this.onChange}
                   />
-                  {errors.name && (
-                    <div className="invalid-feedback">{errors.name}</div>
+                  {this.props.errors.name && (
+                    <div className="invalid-feedback">
+                      {this.props.errors.name}
+                    </div>
                   )}
                 </div>
                 <div className="form-group">
                   <input
                     type="email"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.email
+                      "is-invalid": this.props.errors.email
                     })}
                     placeholder="Email Address"
                     name="email"
                     value={this.state.email}
                     onChange={this.onChange}
                   />
-                  {errors.email && (
-                    <div className="invalid-feedback">{errors.email}</div>
+                  {this.props.errors.email && (
+                    <div className="invalid-feedback">
+                      {this.props.errors.email}
+                    </div>
                   )}
                   <small className="form-text text-muted">
                     This site uses Gravatar so if you want a profile image, use
@@ -91,30 +94,34 @@ class Register extends Component {
                   <input
                     type="password"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.password
+                      "is-invalid": this.props.errors.password
                     })}
                     placeholder="Password"
                     name="password"
                     value={this.state.password}
                     onChange={this.onChange}
                   />
-                  {errors.password && (
-                    <div className="invalid-feedback">{errors.password}</div>
+                  {this.props.errors.password && (
+                    <div className="invalid-feedback">
+                      {this.props.errors.password}
+                    </div>
                   )}
                 </div>
                 <div className="form-group">
                   <input
                     type="password"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.password2
+                      "is-invalid": this.props.errors.password2
                     })}
                     placeholder="Confirm Password"
                     name="password2"
                     value={this.state.password2}
                     onChange={this.onChange}
                   />
-                  {errors.password2 && (
-                    <div className="invalid-feedback">{errors.password2}</div>
+                  {this.props.errors.password2 && (
+                    <div className="invalid-feedback">
+                      {this.props.errors.password2}
+                    </div>
                   )}
                 </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
@@ -129,7 +136,8 @@ class Register extends Component {
 
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth,
