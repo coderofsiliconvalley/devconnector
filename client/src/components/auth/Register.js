@@ -127,7 +127,8 @@ Register.propTypes = {
   auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 
 export default connect(mapStateToProps, { registerUser })(Register);
