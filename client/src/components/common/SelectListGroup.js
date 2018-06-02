@@ -2,20 +2,12 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-const SelectListGroup = ({
-  name,
-  placeholder,
-  value,
-  error,
-  info,
-  onChange,
-  options
-}) => {
-  const selectOptions = options.map(option => {
+const SelectListGroup = ({ name, value, error, info, onChange, options }) => {
+  const selectOptions = options.map(option => (
     <option key={option.label} value={option.value}>
       {option.label}
-    </option>;
-  });
+    </option>
+  ));
   return (
     <div className="form-group">
       <select
@@ -28,8 +20,7 @@ const SelectListGroup = ({
       >
         {selectOptions}
       </select>
-      >
-      {info && <small className="form-text text-muted" />}
+      {info && <small className="form-text text-muted">{info}</small>}
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
@@ -41,7 +32,6 @@ SelectListGroup.propTypes = {
   info: PropTypes.string,
   error: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.string,
   options: PropTypes.array.isRequired
 };
 
