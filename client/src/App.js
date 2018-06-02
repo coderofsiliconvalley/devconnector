@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser } from "./actions/authActions";
 import { logoutUser } from "./actions/authActions";
+import { clearCurrentProfile } from "./actions/profileActions";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
@@ -27,6 +28,7 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     store.dispatch(logoutUser());
+    store.dispatch(clearCurrentProfile());
     //TODO: Clear current Profile
     // Redirect to login
     window.location.href = "/login";
