@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
@@ -29,6 +29,7 @@ class CreateProfile extends Component {
       instagram: "",
       errors: {}
     };
+
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -36,15 +37,18 @@ class CreateProfile extends Component {
   componentDidMount() {
     this.props.getCurrentProfile();
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
 
-      // bring skills array back to CSV
+      // Bring skills array back to CSV
       const skillsCSV = profile.skills.join(",");
+
       // If profile field doesnt exist, make empty string
       profile.company = !isEmpty(profile.company) ? profile.company : "";
       profile.website = !isEmpty(profile.website) ? profile.website : "";
@@ -70,7 +74,7 @@ class CreateProfile extends Component {
         ? profile.social.instagram
         : "";
 
-      // set component fields state
+      // Set component fields state
       this.setState({
         handle: profile.handle,
         company: profile.company,
@@ -170,6 +174,7 @@ class CreateProfile extends Component {
         </div>
       );
     }
+
     // Select options for status
     const options = [
       { label: "* Select Professional Status", value: 0 },
@@ -188,6 +193,9 @@ class CreateProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
+              <Link to="/dashboard" className="btn btn-light">
+                Go Back
+              </Link>
               <h1 className="display-4 text-center">Edit Profile</h1>
               <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.onSubmit}>
@@ -257,6 +265,7 @@ class CreateProfile extends Component {
                   error={errors.bio}
                   info="Tell us a little about yourself"
                 />
+
                 <div className="mb-3">
                   <button
                     type="button"
@@ -275,7 +284,7 @@ class CreateProfile extends Component {
                 <input
                   type="submit"
                   value="Submit"
-                  className="btn btn-info btn-block mt-4"
+                  className="btn btn-info btn-blockmt-4"
                 />
               </form>
             </div>
