@@ -9,6 +9,7 @@ class Profiles extends Component {
   componentDidMount() {
     this.props.getProfiles();
   }
+
   render() {
     const { profiles, loading } = this.props.profile;
     let profileItems;
@@ -21,9 +22,10 @@ class Profiles extends Component {
           <ProfileItem key={profile._id} profile={profile} />
         ));
       } else {
-        profileItems = <h4> No Profiles Found </h4>;
+        profileItems = <h4>No profiles found...</h4>;
       }
     }
+
     return (
       <div className="profiles">
         <div className="container">
@@ -51,4 +53,7 @@ const mapStateToProps = state => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps, { getProfiles })(Profiles);
+export default connect(
+  mapStateToProps,
+  { getProfiles }
+)(Profiles);
